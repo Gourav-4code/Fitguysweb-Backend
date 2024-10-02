@@ -1,7 +1,7 @@
 package com.webapp.FitGuysWeb.service;
 
 import com.webapp.FitGuysWeb.model.USerPrincipal;
-import com.webapp.FitGuysWeb.model.user;
+import com.webapp.FitGuysWeb.model.User;
 import com.webapp.FitGuysWeb.repo.userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +16,7 @@ public class MyUSerDetailsService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        user user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(username);
 
         if(user == null){
             throw new UsernameNotFoundException("User not found");

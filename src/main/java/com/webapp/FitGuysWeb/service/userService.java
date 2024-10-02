@@ -1,7 +1,7 @@
 package com.webapp.FitGuysWeb.service;
 
 
-import com.webapp.FitGuysWeb.model.user;
+import com.webapp.FitGuysWeb.model.User;
 import com.webapp.FitGuysWeb.repo.userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,21 +25,28 @@ public class userService {
 
     private BCryptPasswordEncoder encoder =new BCryptPasswordEncoder(12);
 
-    public List<user> getUser() {
+    public List<User> getUser() {
 
         return userRepo.findAll();
     }
 
-    public user saveUser(user newUser) {
+    public User saveUser(User newUser) {
         newUser.setPassword(encoder.encode(newUser.getPassword()));
         return userRepo.save(newUser);
     }
 
-    public String verify(user user) {
+    public String verify(User user) {
         Authentication authentication= authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
         if(authentication.isAuthenticated()){
             return jwtService.generateToken(user.getUsername(),user.getPassword());
         }
         return "Login Failed";
+    }
+
+    public User updateUser(long id, User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        return userRepo.save(user);
+
+
     }
 }

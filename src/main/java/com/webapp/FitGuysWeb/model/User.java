@@ -12,7 +12,7 @@ import lombok.Setter;
 
 
     @Table(name = "user")
-    public class user {
+    public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,6 +28,9 @@ import lombok.Setter;
 
     @Column(nullable = false)
     private String password;
+
+    @Lob
+    private byte[] profileImage;
 
 
 
