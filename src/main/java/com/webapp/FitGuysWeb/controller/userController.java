@@ -1,5 +1,6 @@
 package com.webapp.FitGuysWeb.controller;
 
+import com.webapp.FitGuysWeb.model.AuthResponse;
 import com.webapp.FitGuysWeb.model.User;
 import com.webapp.FitGuysWeb.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,15 @@ public class userController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return Service.verify(user);
+    public ResponseEntity<AuthResponse> login(@RequestBody User user) {
+        AuthResponse authResponse = Service.verify(user);
+        if (authResponse != null) {
+            return ResponseEntity.ok(authResponse); // Return the AuthResponse if not null
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // Return 401 if authentication fails
     }
+
+
 
     @PutMapping("/user/{id}")
     public ResponseEntity<String> updateUser(@PathVariable long id, @RequestBody User user) {
